@@ -1791,6 +1791,8 @@ function iniciarSessaoQR() {
 function sincronizarQR() {
   if (!qrSessaoId) return;
   localStorage.setItem('pregaapp_qr_'+qrSessaoId, JSON.stringify({ slides, idx: projSlide }));
+  // Envia mudar_slide via WebSocket para sincronizar o projetor remoto
+  wsMudarSlide(projSlide);
 }
 
 function gerarQRCode() {
