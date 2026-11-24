@@ -882,8 +882,7 @@ let isRemoteScreen = false;
 
 function iniciarModoRemoto(sessaoId) {
   // Conectar como projetor via WebSocket
-  wsSessaoId = sessaoId;
-  wsSessaoAtiva = true;
+  // wsSessaoId e wsSessaoAtiva são definidos em wsConectar e no escopo global abaixo
   wsConectar(sessaoId, 'projetor');
   // Atualiza badge de status
   const badge = document.getElementById('remote-status');
