@@ -878,7 +878,8 @@ function renderProjecao() {
   const p = document.getElementById('remote-p');
   const verse = document.getElementById('remote-verse');
   if (h1) h1.textContent = s.titulo || '';
-  if (p) p.textContent = s.corpo || s.subtitulo || '';
+  // corpoPublico = texto público do slide; corpo = anotações privadas do pregador (nunca mostrar no projetor)
+  if (p) p.textContent = s.corpoPublico || s.subtitulo || '';
   if (verse) verse.textContent = s.versiculo ? '\ud83d\udcd6 ' + s.versiculo : '';
   // Atualiza badge
   const badge = document.getElementById('remote-status');
