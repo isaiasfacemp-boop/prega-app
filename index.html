@@ -860,25 +860,7 @@ let qrPollInterval = null;
 let qrSessaoId = null;
 let isRemoteScreen = false;
 
-// ===== VERIFICAR SE É TELA REMOTA =====
-(function verificarRemoto() {
-  const hash = window.location.hash;
-  // Detecta modo projetor via hash (#remote-ID) ou query param (?projetor=ID)
-  const urlParams = new URLSearchParams(window.location.search);
-  const projetorParam = urlParams.get('projetor');
-  if (projetorParam) {
-    // Redireciona para hash para manter compatibilidade
-    window.location.hash = '#remote-' + projetorParam;
-  }
-  if (hash.startsWith('#remote-')) {
-    const sessaoId = hash.replace('#remote-','');
-    isRemoteScreen = true;
-    document.querySelector('.app').style.display = 'none';
-    const rs = document.getElementById('remote-screen');
-    rs.style.display = 'flex';
-    iniciarModoRemoto(sessaoId);
-  }
-})();
+// [verificarRemoto movido para o final]
 
 function iniciarModoRemoto(sessaoId) {
   // Conectar como projetor via WebSocket
@@ -2733,6 +2715,26 @@ function copiarHolyrics() {
   const conteudo = gerarConteudoHL();
   navigator.clipboard?.writeText(conteudo).then(() => appAlert('✅ Conteúdo copiado!'));
 }
+
+// ===== VERIFICAR SE É TELA REMOTA =====
+(function verificarRemoto() {
+  const hash = window.location.hash;
+  // Detecta modo projetor via hash (#remote-ID) ou query param (?projetor=ID)
+  const urlParams = new URLSearchParams(window.location.search);
+  const projetorParam = urlParams.get('projetor');
+  if (projetorParam) {
+    // Redireciona para hash para manter compatibilidade
+    window.location.hash = '#remote-' + projetorParam;
+  }
+  if (hash.startsWith('#remote-')) {
+    const sessaoId = hash.replace('#remote-','');
+    isRemoteScreen = true;
+    document.querySelector('.app').style.display = 'none';
+    const rs = document.getElementById('remote-screen');
+    rs.style.display = 'flex';
+    iniciarModoRemoto(sessaoId);
+  }
+})();
 
 // ===== INIT =====
 renderMsgList();
