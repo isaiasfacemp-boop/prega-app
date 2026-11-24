@@ -1795,8 +1795,11 @@ function iniciarSessaoQR() {
     appAlert('Gere os slides primeiro!\nV\u00e1 ao Editor \u2192 crie uma mensagem \u2192 clique em "Gerar Slides".');
     return;
   }
-  wsSessaoId = gerarSessaoId();
+  const id = gerarSessaoId();
+  wsSessaoId = id;
+  qrSessaoId = id;
   wsSessaoAtiva = true;
+  qrSessaoAtiva = true;
   wsConectar(wsSessaoId, 'pregador');
   gerarQRCode();
   atualizarQRStatus();
