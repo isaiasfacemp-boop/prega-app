@@ -798,12 +798,13 @@
 
 <!-- TELA REMOTA (abre em nova aba pelo QR) -->
 <div id="remote-screen" style="display:none;position:fixed;inset:0;background:#0a0a1a;z-index:9999;flex-direction:column;align-items:center;justify-content:center;">
-  <div style="width:100%;max-width:1200px;padding:60px;text-align:center;">
-    <h1 id="remote-h1" style="font-size:4rem;font-weight:800;color:#fff;margin-bottom:20px;line-height:1.2;"></h1>
-    <p id="remote-p" style="font-size:2rem;color:#cbd5e1;line-height:1.6;"></p>
-    <div id="remote-verse" style="font-size:1.5rem;color:#a78bfa;margin-top:30px;font-style:italic;"></div>
+  <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 120px;box-sizing:border-box;text-align:center;">
+    <h1 id="remote-h1" style="font-size:clamp(2rem,5vw,4.5rem);font-weight:800;color:#fff;margin-bottom:32px;line-height:1.2;width:100%;"></h1>
+    <p id="remote-p" style="font-size:clamp(1.4rem,3vw,2.8rem);color:#e2e8f0;line-height:1.7;width:100%;margin-bottom:0;white-space:pre-line;"></p>
+    <div id="remote-ref" style="font-size:clamp(1.2rem,2.5vw,2rem);color:#a78bfa;margin-top:28px;font-weight:600;font-style:italic;width:100%;"></div>
   </div>
-  <div style="position:fixed;bottom:16px;font-size:0.8rem;color:rgba(255,255,255,.3)">PregaApp — Projeção Remota</div>
+  <div style="position:fixed;bottom:16px;right:24px;font-size:0.75rem;color:rgba(255,255,255,.2)">PregaApp</div>
+  <div id="remote-status" style="position:fixed;bottom:16px;left:24px;font-size:0.75rem;color:rgba(255,255,255,.2)"></div>
 </div>
 
 <script>
@@ -876,12 +877,16 @@ function renderProjecao() {
   if (!s) return;
   const h1 = document.getElementById('remote-h1');
   const p = document.getElementById('remote-p');
-  const verse = document.getElementById('remote-verse');
-  if (h1) h1.textContent = s.titulo || '';
-  // corpoPublico = texto público do slide; corpo = anotações privadas do pregador (nunca mostrar no projetor)
-  if (p) p.textContent = s.corpoPublico || s.subtitulo || '';
-  if (verse) verse.textContent = s.versiculo ? '\ud83d\udcd6 ' + s.versiculo : '';
-  // Atualiza badge
+  const ref = document.getElementById('remote-ref');
+  if (s.tipo === 'versiculo') {
+    if (h1) h1.textContent = '';
+    if (p) p.textContent = s.corpo || '';
+    if (ref) ref.textContent = s.titulo || '';
+  } else {
+    if (h1) h1.textContent = s.titulo || '';
+    if (p) p.textContent = s.corpoPublico || s.subtitulo || '';
+    if (ref) ref.textContent = s.versiculo ? '\ud83d\udcd6 ' + s.versiculo : '';
+  }
   const badge = document.getElementById('remote-status');
   if (badge) badge.textContent = (projSlide + 1) + '/' + slides.length;
 }
